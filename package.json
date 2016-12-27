@@ -1,0 +1,24 @@
+{
+  "name": "guess-that-tweet",
+  "version": "0.1.0",
+  "description": "A game of tweets.",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wesbasinger/guess-that-tweet.git"
+  },
+  "keywords": [
+    "twitter",
+    "game",
+    "guess"
+  ],
+  "author": "Wes Basinger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wesbasinger/guess-that-tweet/issues"
+  },
+  "homepage": "https://github.com/wesbasinger/guess-that-tweet#readme"
+}
