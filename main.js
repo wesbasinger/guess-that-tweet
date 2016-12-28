@@ -9,11 +9,7 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       ready: false,
-      score: 0,
-      name: null,
-      highScore: null,
-      tweets: null,
-      users:  null
+      gameObjs: null
     }
   },
 
@@ -23,19 +19,31 @@ var App = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({tweets: data});
+        var gameObjs = [];
         var screenNames = [];
         data.forEach(function(tweet) {
           if (screenNames.indexOf(tweet.user) == -1) {
               screenNames.push(tweet.user);
           }
+          gameObjs.push({
+            correctUser: tweet.user,
+            text: tweet.tweet
+          })
         });
-        this.setState({users: screenNames});
+        gameObjs.forEach(function(gameObj) {
+          gameObj.bogusUserOne = screenNames[Math.floor(Math.random() * screenNames.length)];
+          gameObj.bogusUserTwo = screenNames[Math.floor(Math.random() * screenNames.length)];
+        })
+        this.setState({gameObjs: gameObjs});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(status, err.toString());
       }.bind(this)
     });
+  },
+
+  handleGetGameObj: function() {
+    return this.state.gameObjs.pop();
   },
 
   onYesButtonClick: function(e) {
@@ -52,7 +60,7 @@ var App = React.createClass({
       )
     } else {
       return(
-        <GameBox tweets={this.state.tweets} users={this.state.users}/>
+        <GameBox gameObjs={this.state.gameObjs} onGameObjRequest={this.handleGetGameObj}/>
       )
     }
   }
