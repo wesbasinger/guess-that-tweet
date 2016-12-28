@@ -4,7 +4,9 @@
   "description": "A game of tweets.",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+	"prestart" : "webpack",
+	"start" : "node app.js"
   },
   "repository": {
     "type": "git",

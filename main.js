@@ -2,6 +2,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 
+var GameBox = require('./components/GameBox');
+
 var App = React.createClass({
 
   getInitialState: function() {
@@ -10,7 +12,8 @@ var App = React.createClass({
       score: 0,
       name: null,
       highScore: null,
-      tweets: null
+      tweets: null,
+      users:  null
     }
   },
 
@@ -21,6 +24,13 @@ var App = React.createClass({
       cache: false,
       success: function(data) {
         this.setState({tweets: data});
+        var screenNames = [];
+        data.forEach(function(tweet) {
+          if (screenNames.indexOf(tweet.user) == -1) {
+              screenNames.push(tweet.user);
+          }
+        });
+        this.setState({users: screenNames});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(status, err.toString());
@@ -28,17 +38,21 @@ var App = React.createClass({
     });
   },
 
+  onYesButtonClick: function(e) {
+    this.setState({ready: true});
+  },
+
   render: function() {
     if (!this.state.ready) {
       return(
         <div>
           <h1>Are you ready to play?</h1>
-          <button>Yes</button>
+          <button onClick={this.onYesButtonClick}>Yes</button>
         </div>
       )
     } else {
       return(
-        <div>You must be ready!</div>
+        <GameBox tweets={this.state.tweets} users={this.state.users}/>
       )
     }
   }
