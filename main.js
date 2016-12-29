@@ -50,8 +50,13 @@ var App = React.createClass({
           })
         });
         gameObjs.forEach(function(gameObj) {
-          gameObj.bogusUserOne = screenNames[Math.floor(Math.random() * screenNames.length)];
-          gameObj.bogusUserTwo = screenNames[Math.floor(Math.random() * screenNames.length)];
+          var cp = screenNames.slice()
+          var correctUserIndex = cp.indexOf(gameObj.correctUser);
+          cp.splice(correctUserIndex, 1)
+          gameObj.bogusUserOne = cp[Math.floor(Math.random() * cp.length)];
+          var bogusUserOneIndex = cp.indexOf(gameObj.bogusUserOne)
+          cp.splice(bogusUserOneIndex, 1)
+          gameObj.bogusUserTwo = cp[Math.floor(Math.random() * cp.length)];
         })
         this.setState({gameObjs: gameObjs});
       }.bind(this),
