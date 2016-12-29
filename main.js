@@ -3,22 +3,29 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 
 var GameBox = require('./components/GameBox');
+var Scoreboard = require('./components/Scoreboard');
 
 var App = React.createClass({
 
   getInitialState: function() {
     return {
       ready: false,
-      gameObjs: null
+      gameObjs: null,
+      score: 0,
+      message: null
     }
   },
 
   handleClick: function(e) {
     var currQuestion = this.state.gameObjs[0];
     if(e.target.value == currQuestion.correctUser) {
-      console.log("correct");
+      var currScore = parseInt(this.state.score)
+      var incScore = currScore + 1;
+      this.setState({score: incScore});
+      this.setState({message: "Correct!"});
     } else {
-      console.log("incorrect");
+      this.setState({message: "Incorrect! it was actually " +
+                    currQuestion.correctUser});
     }
     var cp = this.state.gameObjs;
     cp.shift();
@@ -66,9 +73,21 @@ var App = React.createClass({
           <button onClick={this.onYesButtonClick}>Yes</button>
         </div>
       )
+    } else if (this.state.ready && this.state.gameObjs) {
+      return(
+        <div>
+        <Scoreboard score={this.state.score} />
+        <GameBox message={this.state.message}
+                 gameObjs={this.state.gameObjs}
+                 onClickEvent={this.handleClick}/>
+        </div>
+      )
     } else {
       return(
-        <GameBox gameObjs={this.state.gameObjs} onClickEvent={this.handleClick}/>
+        <div>
+          <p>Game objects still loading...  Try again.</p>
+          <button onClick={this.onYesButtonClick}>Try Again</button>
+        </div>
       )
     }
   }

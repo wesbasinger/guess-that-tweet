@@ -30,6 +30,7 @@ var GameBox = React.createClass({
               <button onClick={self.props.onClickEvent} value={choice} key={numbers.pop()}>{choice}</button>
           )
         })}
+        <p>{this.props.message}</p>
       </div>
     )
   }
