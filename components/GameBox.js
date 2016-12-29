@@ -9,9 +9,18 @@ function shuffle(a) {
 
 var GameBox = React.createClass({
 
+  handleClick: function(e) {
+    var currQuestion = this.props.gameObjs[0];
+    if(e.target.value == currQuestion.correctUser) {
+      console.log("correct");
+    } else {
+      console.log("incorrect");
+    }
+  },
+
   render: function() {
 
-    var currQuestion = this.props.onGameObjRequest();
+    var currQuestion = this.props.gameObjs[0];
 
     var choices = [currQuestion.correctUser, currQuestion.bogusUserOne, currQuestion.bogusUserTwo];
 
@@ -19,13 +28,15 @@ var GameBox = React.createClass({
 
     const numbers = [1, 2, 3]
 
+    var self = this;
+
     return(
       <div>
         <h1>Guess the Twitter user...</h1>
         <blockquote>{currQuestion.text}</blockquote>
         {choices.map(function(choice) {
           return(
-              <button value={choice} key={numbers.pop()}>{choice}</button>
+              <button onClick={self.handleClick} value={choice} key={numbers.pop()}>{choice}</button>
           )
         })}
       </div>

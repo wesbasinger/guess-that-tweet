@@ -42,10 +42,6 @@ var App = React.createClass({
     });
   },
 
-  handleGetGameObj: function() {
-    return this.state.gameObjs.pop();
-  },
-
   onYesButtonClick: function(e) {
     this.setState({ready: true});
   },
@@ -60,7 +56,7 @@ var App = React.createClass({
       )
     } else {
       return(
-        <GameBox gameObjs={this.state.gameObjs} onGameObjRequest={this.handleGetGameObj}/>
+        <GameBox gameObjs={this.state.gameObjs} />
       )
     }
   }
