@@ -12,7 +12,8 @@ var App = React.createClass({
       ready: false,
       gameObjs: null,
       score: 0,
-      message: null
+      message: null,
+      gameOver: false
     }
   },
 
@@ -30,6 +31,9 @@ var App = React.createClass({
     var cp = this.state.gameObjs;
     cp.shift();
     this.setState({gameObjs:cp});
+    if(this.state.gameObjs.length == 0) {
+      this.setState({gameOver: true})
+    }
   },
 
   componentDidMount() {
@@ -71,14 +75,14 @@ var App = React.createClass({
   },
 
   render: function() {
-    if (!this.state.ready) {
+    if (!this.state.ready & !this.state.gameOver) {
       return(
         <div>
           <h1>Are you ready to play?</h1>
           <button onClick={this.onYesButtonClick}>Yes</button>
         </div>
       )
-    } else if (this.state.ready && this.state.gameObjs) {
+    } else if (this.state.ready && this.state.gameObjs && !this.state.gameOver) {
       return(
         <div>
         <Scoreboard score={this.state.score} />
@@ -87,6 +91,13 @@ var App = React.createClass({
                  onClickEvent={this.handleClick}/>
         </div>
       )
+    } else if (this.state.gameOver) {
+      return(
+        <div>
+          Game Over!
+        </div>
+      )
+
     } else {
       return(
         <div>
