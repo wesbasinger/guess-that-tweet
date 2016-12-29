@@ -13,6 +13,18 @@ var App = React.createClass({
     }
   },
 
+  handleClick: function(e) {
+    var currQuestion = this.state.gameObjs[0];
+    if(e.target.value == currQuestion.correctUser) {
+      console.log("correct");
+    } else {
+      console.log("incorrect");
+    }
+    var cp = this.state.gameObjs;
+    cp.shift();
+    this.setState({gameObjs:cp});
+  },
+
   componentDidMount() {
     $.ajax({
       url: 'api/tweets',
@@ -56,7 +68,7 @@ var App = React.createClass({
       )
     } else {
       return(
-        <GameBox gameObjs={this.state.gameObjs} />
+        <GameBox gameObjs={this.state.gameObjs} onClickEvent={this.handleClick}/>
       )
     }
   }

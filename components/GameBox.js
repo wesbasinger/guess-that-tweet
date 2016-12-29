@@ -9,15 +9,6 @@ function shuffle(a) {
 
 var GameBox = React.createClass({
 
-  handleClick: function(e) {
-    var currQuestion = this.props.gameObjs[0];
-    if(e.target.value == currQuestion.correctUser) {
-      console.log("correct");
-    } else {
-      console.log("incorrect");
-    }
-  },
-
   render: function() {
 
     var currQuestion = this.props.gameObjs[0];
@@ -36,7 +27,7 @@ var GameBox = React.createClass({
         <blockquote>{currQuestion.text}</blockquote>
         {choices.map(function(choice) {
           return(
-              <button onClick={self.handleClick} value={choice} key={numbers.pop()}>{choice}</button>
+              <button onClick={self.props.onClickEvent} value={choice} key={numbers.pop()}>{choice}</button>
           )
         })}
       </div>
